@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--suppress LongLine -->
+<configuration debug="true" scan="true" scanPeriod="1 minutes">
+    <property name="FILE_PATH" value="/var/log/faceet/io"/>
+    <property name="datePattern" value="yyyy-MM-dd'T'HH:mm:ss.SSS"/>
+    <property name="STACK_TRACE_COUNT" value="10"/>
+    <property name="CLASS_NAME_LENGTH" value="40"/>
+    <property name="MAX_FILE_SIZE" value="200MB"/>
+
+    <property name="ROOT_LEVEL" value="WARN"/>
+    <property name="APPLICATION_LEVEL" value="debug"/>
+    <property name="LOG_PATTERN"
+              value="%date{${datePattern}} %-5([%level]) requestId:[%X{traceId:-},%X{spanId:-}] thread:[%-25.25(%thread)] %logger{${CLASS_NAME_LENGTH}}.%method@%line:%n   %message %rootException{${STACK_TRACE_COUNT}}%n"/>
+
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+
+    <logger name="com.example" level="${APPLICATION_LEVEL}"/>
+    <logger name="org.springframework" level="${ROOT_LEVEL}"/>
+
+    <root level="${ROOT_LEVEL}">
+        <!--<appender-ref ref="ASYNC_FILE"/>-->
+                <appender-ref ref="CONSOLE"/>
+<!--        <appender-ref ref="ROLLING_FILE"/>-->
+        <!--        <appender-ref ref="LOGSTASH"/>-->
+    </root>
+</configuration>
